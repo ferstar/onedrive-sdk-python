@@ -5,7 +5,7 @@ import json
 class ResourceDiscoveryRequest(object):
     def __init__(self):
         self._method = 'GET'
-        self._discovery_service_url = 'https://api.office.com/discovery/v2.0/me/services'
+        self._discovery_service_url = 'https://graph.microsoft.com/v1.0/sites/root/sharepointIds/siteUrl'
 
     def get_service_info(self, access_token):
         """Send request to discovery service. Return ServiceInfo
@@ -23,10 +23,7 @@ class ResourceDiscoveryRequest(object):
         """
         headers = {'Authorization': 'Bearer ' + access_token}
         response = json.loads(requests.get(self._discovery_service_url, headers=headers).text)
-        service_info_list = [ServiceInfo(x) for x in response['value']]
-        trimmed_service_info_list = [si for si in service_info_list
-                                     if si.capability == 'MyFiles' and si.service_api_version == 'v2.0']
-        return trimmed_service_info_list
+        return response['value']
 
 
 class ServiceInfo(object):
