@@ -101,9 +101,9 @@ code = GetAuthCodeServer.get_auth_code(auth_url, redirect_uri)
 auth.authenticate(code, redirect_uri, client_secret, resource=discovery_uri)
 # If you have access to more than one service, you'll need to decide
 # which ServiceInfo to use instead of just using the first one, as below.
-service_info = ResourceDiscoveryRequest().get_service_info(auth.access_token)[0]
-auth.redeem_refresh_token(service_info.service_resource_id)
-client = onedrivesdk.OneDriveClient(service_info.service_resource_id + '/_api/v2.0/', auth, http)
+service_info = ResourceDiscoveryRequest().get_service_info(auth.access_token)
+auth.redeem_refresh_token(service_info)
+client = onedrivesdk.OneDriveClient(service_info + '/_api/v2.0/', auth, http)
 ```
 
 ## Examples
